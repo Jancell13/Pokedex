@@ -1,43 +1,21 @@
 <!DOCTYPE html>
 <html lang="es-co">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Pokédex</title>
-    <style>
-        body{
-            text-align: center;
-        }
-        .searchMenu{
-            margin: 20px;
-        }
-        #pokedexContainer{
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-flow: row wrap;
-            width: 100%;
-            /* display: grid;
-            grid-template: repeat(3, 1fr) / repeat(3, 1fr);
-            grid-gap: 50px 30px; */
-        }
-        #pokedexContainer > div{
-            border: 1px solid black;
-            border-radius: 1em;
-            margin: 0.5em
-        }
-    </style>
-</head>
-<body onload="showPokemon()">
+    <link rel="stylesheet" href="style.css">
+  </head>
+  <body onload="showPokemon()">
     <h1>Pokédex</h1>
     <div class="searchMenu">
-        <label for="search">Buscar pokemon: </label>
-        <input id="search">
-        <button id="btnSearch">Buscar</button>
-        <button id="cleanSearch">Borrar</button>
+      <label for="search">Buscar pokemon: </label>
+      <input id="search" />
+      <button id="btnSearch">Buscar</button>
+      <button id="cleanSearch">Borrar</button>
     </div>
     <div id="pokedexContainer"></div>
     <script src="main.js"></script>
-</body>
+  </body>
 </html>

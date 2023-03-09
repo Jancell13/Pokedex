@@ -3,6 +3,27 @@ const url = "https://pokeapi.co/api/v2/pokemon/";
 const searchInput = document.getElementById("search");
 const pokedexContainer = document.getElementById("pokedexContainer");
 
+const tiposEs = {
+  bug: "bicho",
+  dark: "siniestro",
+  dragon: "dragón",
+  electric: "eléctrico",
+  fairy: "hada",
+  fighting: "lucha",
+  fire: "fuego",
+  flying: "volador",
+  ghost: "fantasma",
+  grass: "planta",
+  ground: "tierra",
+  ice: "hielo",
+  normal: "normal",
+  poison: "veneno",
+  psychic: "psyquico",
+  rock: "roca",
+  steel: "acero",
+  water: "agua",
+};
+var numP;
 function showError(msg) {
   pokedexContainer.innerHTML = `<p>${msg}</p>`;
 }
@@ -19,24 +40,38 @@ async function connectionAPI(pokemon) {
   const newDiv = document.createElement("div");
   newDiv.setAttribute("id", `${pokemon}`);
   const data = await response.json();
+
+  const tipo1 = tiposEs[data.types[0].type.name];
+
   if (data.types[0] && data.types[1]) {
-    tipos = `<p>Tipos: ${data.types[0].type.name} - ${data.types[1].type.name}</p>`;
+    const tipo2 = tiposEs[data.types[1].type.name];
+    tipos = `<span class="${tipo1}">${tipo1}</span> - <span class="${tipo2}">${tipo2}</span>`;
   } else {
-    tipos = `<p>Tipo: ${data.types[0].type.name}</p>`;
-    if (data.types[0].type.name === "fire") {
-      tipos =`<p>Tipo: fuego</p>`
-    }
+    tipos = `<span class="${tipo1}">${tipo1}</span>`;
   }
-  createDiv(data, newDiv, tipos);
+
+  
+
+  if (data.id < 10) {
+    numP = "000" + data.id;
+  } else if (data.id < 100) {
+    numP = "00" + data.id;
+  } else if (data.id < 1000) {
+    numP = "0" + data.id;
+  } else{
+    numP = data.id
+  }
+
+  createDiv(data, newDiv, tipos, numP);
 }
 
-function createDiv(data, newDiv, tipos) {
+function createDiv(data, newDiv, tipos, numP) {
   newDiv.innerHTML = `
-<h2>${data.name.toUpperCase()}</h2>
-<img src="${data.sprites.front_default}">
-<img src="${data.sprites.back_default}">
-${tipos}
-<p>Numero: ${data.id}</p>
+  <h2># ${numP}</h2>
+  <img src="${data.sprites.front_default}">
+  <img src="${data.sprites.back_default}">
+  <h3>${data.name.toUpperCase()}</h3>
+<p>Tipo: ${tipos}</p>
 <p>Altura: ${data.height / 10}m</p>
 <p>Peso: ${data.weight / 10}kg</p>
 `;
@@ -46,7 +81,7 @@ ${tipos}
 async function showPokemon() {
   try {
     for (let i = 1; i <= 151; i++) {
-      connectionAPI(i);
+      await connectionAPI(i);
     }
   } catch (error) {
     console.error("Ocurrio un error, " + error);
