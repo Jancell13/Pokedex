@@ -1,5 +1,9 @@
 const url = "https://pokeapi.co/api/v2/pokemon/";
 
+var numP;
+
+
+
 const searchInput = document.getElementById("search");
 const pokedexContainer = document.getElementById("pokedexContainer");
 
@@ -23,7 +27,28 @@ const tiposEs = {
   steel: "acero",
   water: "agua",
 };
-var numP;
+
+const cssTypes = {
+  acero: "#b8b8d0",
+  agua: "#6890f0",
+  bicho: "#a8b820",
+  dragón: "#7038f8",
+  eléctrico: "#f8d030",
+  fantasma: "#705898",
+  fuego: "#f08030",
+  hada: "#ee99ac",
+  hielo: "#98d8d8",
+  lucha: "#c03028",
+  normal: "#a8a878",
+  planta: "#78c850",
+  psyquico: "#f85888",
+  roca: "#b8a038",
+  siniestro: "#705848",
+  tierra: "#e0c068",
+  veneno: "#a040a0",
+  volador: "#a890f0",
+};
+
 function showError(msg) {
   pokedexContainer.innerHTML = `<p>${msg}</p>`;
 }
@@ -43,14 +68,19 @@ async function connectionAPI(pokemon) {
 
   const tipo1 = tiposEs[data.types[0].type.name];
 
+  const cssSpan1 = `style="background: ${cssTypes[tipo1]}"`;
+  
+  
+  //uno o dos tipos elementales
   if (data.types[0] && data.types[1]) {
     const tipo2 = tiposEs[data.types[1].type.name];
-    tipos = `<span class="${tipo1}">${tipo1}</span> - <span class="${tipo2}">${tipo2}</span>`;
+    const cssSpan2 = `style="background: ${cssTypes[tipo2]}"`;
+    tipos = `<span ${cssSpan1} id="${tipo1}">${tipo1}</span> - <span ${cssSpan2} id="${tipo2}">${tipo2}</span>`;
+    newDiv.style.background = `linear-gradient(to bottom, ${cssTypes[tipo1]} 5%, ${cssTypes[tipo2]})`;
   } else {
-    tipos = `<span class="${tipo1}">${tipo1}</span>`;
+    tipos = `<span ${cssSpan1} id="${tipo1}">${tipo1}</span>`;
+    newDiv.style.background = `${cssTypes[tipo1]}`;
   }
-
-  
 
   if (data.id < 10) {
     numP = "000" + data.id;
@@ -58,8 +88,8 @@ async function connectionAPI(pokemon) {
     numP = "00" + data.id;
   } else if (data.id < 1000) {
     numP = "0" + data.id;
-  } else{
-    numP = data.id
+  } else {
+    numP = data.id;
   }
 
   createDiv(data, newDiv, tipos, numP);
@@ -118,6 +148,12 @@ async function searchedPokemon() {
   } catch (error) {
     console.error(error);
     showError("Ha ocurrido un error al buscar el pokemon");
+  }
+}
+
+function enter(e) {
+  if (e.keyCode == 13) {
+    searchedPokemon();
   }
 }
 

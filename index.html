@@ -11,7 +11,7 @@
     <h1>Pokédex</h1>
     <div class="searchMenu">
       <label for="search">Buscar pokemon: </label>
-      <input id="search" />
+      <input id="search" onchange="searchedPokemon()" onkeyup="enter()"/>
       <button id="btnSearch">Buscar</button>
       <button id="cleanSearch">Borrar</button>
     </div>
