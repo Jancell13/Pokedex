@@ -1,8 +1,22 @@
 body {
   text-align: center;
 }
+
+a{
+  text-decoration: none;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
 .searchMenu {
   margin: 20px;
+}
+img{
+  margin: 0;
+  padding: 0;
 }
 /* #pokedexContainer {
     // display: flex;
@@ -25,11 +39,20 @@ body {
 }
 
 #pokedexContainer > div {
+  position: relative;
+  color: white;
   width: 15em;
   max-width: 300px;
   border: 1px solid black;
   border-radius: 1em;
   margin: 0.5em;
+  font-family: "Pokemon classic";
+  text-shadow: 2px 2px 0 black;
+}
+
+@font-face {
+  font-family: Pokemon classic;
+  src: url(./font/Pokemon\ Classic.ttf);
 }
 
 /* .twoTypes{
@@ -42,6 +65,3 @@ span {
   border: 1px solid black;
 }
 
-.cssType{
-  background-color: "";
-}
