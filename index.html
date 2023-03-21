@@ -5,19 +5,25 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Pokédex</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="/styles/main.css" />
+    <link rel="stylesheet" href="/styles/card.css" />
+    <link rel="stylesheet" href="/styles/loaderPoke.css" />
+    <link rel="shortcut icon" href="" type="image/x-icon" />
   </head>
-  <body onload="showPokemon()">
-    <h1>Pokédex</h1>
-
+  <body>
     <div class="searchMenu">
-      <label for="search">Buscar pokemon: </label>
-      <input id="search" onchange="searchedPokemon()" onkeyup="enter()"/>
-      <button id="btnSearch">Buscar</button>
-      <button id="cleanSearch">Borrar</button>
+      <h1>Pokédex</h1>
+      <input class="searchBar" id="search" placeholder="Buscar Pokemón" />
     </div>
+
     <div id="pokedexContainer"></div>
 
-    <script src="main.js"></script>
+    <div class="container">
+      <div class="mainball">
+        <div class="pokebutton"></div>
+      </div>
+    </div>
+
+    <script type="module" src="/scripts/main.js"></script>
   </body>
 </html>

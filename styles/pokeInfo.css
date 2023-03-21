@@ -1,0 +1,120 @@
+@import url("https://fonts.googleapis.com/css2?family=Noto+Color+Emoji&family=Roboto:wght@100&display=swap");
+*,
+html {
+  margin: 0;
+  padding: 0;
+}
+body {
+  color: white;
+  text-shadow: 2px 2px black;
+  background-color: #252424;
+  opacity: 1;
+  background: radial-gradient(
+      circle,
+      transparent 20%,
+      #252424 20%,
+      #252424 80%,
+      transparent 80%,
+      transparent
+    ),
+    radial-gradient(
+        circle,
+        transparent 20%,
+        #252424 20%,
+        #252424 80%,
+        transparent 80%,
+        transparent
+      )
+      37.5px 37.5px,
+    linear-gradient(#9f2b2b 3px, transparent 3px) 0 -1.5px,
+    linear-gradient(90deg, #9f2b2b 3px, #252424 3px) -1.5px 0;
+  background-size: 75px 75px, 75px 75px, 37.5px 37.5px, 37.5px 37.5px;
+}
+
+#pokemonInfo {
+  font-family: "Pokemon classic";
+  border: 1px solid;
+  border-radius: 50px;
+  padding: 1em 0 1.5em 1.5em;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+button {
+  position: absolute;
+  background: #fff;
+  border: 0.25em solid #252424;
+  border-radius: 1em;
+  margin: 20px;
+  padding: 10px;
+  right: 0;
+  top: 0;
+}
+img {
+  width: 144px;
+}
+h1 {
+  margin-block-start: 0.67em;
+  margin-block-end: 0.67em;
+  margin-inline-start: 0px;
+  margin-inline-end: 0px;
+}
+p{
+  margin-block-start: 1em;
+  margin-block-end: 1em;
+  margin-inline-start: 0px;
+  margin-inline-end: 0px;
+}
+
+.genContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+.btns {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.datosContainer {
+  display: block;
+  align-self: flex-start;
+  margin: auto;
+  width: 30em;
+}
+
+input[type="checkbox"] {
+  appearance: none;
+  font-size: 3em;
+  font-family: "Noto Color Emoji", sans-serif;
+  filter: brightness(0.7);
+}
+#btnM::before {
+  filter: hue-rotate(55deg);
+  content: "♂️";
+}
+#btnF::before {
+  filter: hue-rotate(20deg);
+  content: "♀️";
+}
+#btnS::before {
+  filter: hue-rotate(250deg) brightness(1.6);
+  content: "♂️";
+}
+#btnSF::before {
+  filter: hue-rotate(135deg) brightness(2.5);
+  content: "♀️";
+}
+input[type="checkbox"]:checked {
+  filter: brightness(1);
+}
+.ocultar {
+  display: none;
+}
+span {
+  padding: 0 0.2em 0.2em 0.3em;
+  border-radius: 0.5em;
+  text-shadow: 2px 2px black;
+  border: 1px solid black;
+}
