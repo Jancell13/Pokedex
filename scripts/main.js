@@ -1,12 +1,32 @@
 import { tiposEs, cssTypes } from "./tipos.js";
 const url = "https://pokeapi.co/api/v2/pokemon/";
-var numP,tipos;
+var numP, tipos;
 const pokedexContainer = document.getElementById("pokedexContainer");
 
 window.sendName = sendName;
 
 document.addEventListener("DOMContentLoaded", () => {
   showPokemon();
+});
+
+document.querySelectorAll("button").forEach((button) => {
+  button.addEventListener("click", () => {
+    const a = button.textContent;
+    console.log(a);
+
+    document.querySelectorAll(".cardPoke").forEach((poke) => {
+      if (button.textContent.toLowerCase() === "ver todos") {
+        poke.classList.remove("ocultar");
+      } else {
+        poke.textContent
+          .toLowerCase()
+          .includes(button.textContent.toLowerCase())
+          ? poke.classList.remove("ocultar")
+          : poke.classList.add("ocultar");
+      }
+      window.scrollTo(0, document.body.scrollTop);
+    });
+  });
 });
 
 function showError(msg) {
@@ -26,7 +46,7 @@ async function connectionAPI(pokemon) {
         showError(`No se encontró ningún pokemon llamado: ${pokemon}`);
       }
     }
-    
+
     const newDiv = document.createElement("div");
     const data = await response.json();
 
@@ -46,8 +66,7 @@ async function connectionAPI(pokemon) {
       tipos = `<span ${cssSpan1} id="${tipo1}">${tipo1}</span>`;
       newDiv.style.background = `${cssTypes[tipo1]}`;
     }
-//typesCss(data)
-
+    //typesCss(data)
 
     if (data.id < 10) {
       numP = "00" + data.id;
@@ -70,21 +89,30 @@ async function connectionAPI(pokemon) {
     showError("Ha ocurrido un error al buscar el pokemon");
   }
 }
-function createDiv(data, newDiv,) {
+function createDiv(data, newDiv, tipos, numP) {
   if (data.name === "nidoran-f") {
     data.name = "nidoran ♀️";
   } else if (data.name === "nidoran-m") {
     data.name = "nidoran ♂️";
   }
-  
-  newDiv.innerHTML = `
+
+  /* newDiv.innerHTML = `
   <a href="/pokemonInfo.html" class="infoP" onclick="sendName('${data.name}')"></a>
   <h2># ${numP}</h2>
   <img src="${data.sprites.front_default}">
   <p>${tipos}</p>
   <h3>${data.name.toUpperCase()}</h3>
+  `; */
+  newDiv.innerHTML = `
+  <a href="/pokemonInfo.html" class="infoP" onclick="sendName('${
+    data.name
+  }')"></a>
+  <h2># ${numP}</h2>
+  <img src="${data.sprites.front_default}">
+  <p>${tipos}</p>
+  <h3>${data.name.toUpperCase()}</h3>
   `;
-  
+
   pokedexContainer.appendChild(newDiv);
 }
 
@@ -100,16 +128,22 @@ function sendName(data) {
 
 async function showPokemon() {
   const loaderPokeball = document.querySelector(".container");
+  document.querySelectorAll("button").forEach((btnTipos) => {
+    btnTipos.disabled = true;
+  });
   try {
     for (let i = 1; i <= 151; i++) {
       await connectionAPI(i);
       //document.getElementById("cleanSearch").disabled = true;
     }
-    loaderPokeball.style.opacity = 0;
-    loaderPokeball.style.visibility = 0;
+    document.querySelectorAll("button").forEach((btnTipos) => {
+      btnTipos.disabled = false;
+    });
+    loaderPokeball.innerHTML = "";
     document.querySelectorAll(".ocultar").forEach((poke) => {
       poke.classList.remove("ocultar");
     });
+
     //document.getElementById("cleanSearch").disabled = false;
   } catch (error) {
     console.error("Ocurrio un error, " + error);

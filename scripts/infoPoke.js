@@ -29,33 +29,32 @@ async function connectionAPI(pokemon) {
 
     const evo = await fetch(evoP + idEvo[data.id]);
     const dataEvo = await evo.json();
-    if (!dataEvo.chain.evolves_to[0].evolves_to[0]) {
-      console.log("no tiene tercera forma");
-    } else if (
-      dataEvo.chain.evolves_to[0].evolves_to[0].species.name === data.name
-    ) {
-      console.log("tercera forma");
-      evolution = "";
+    if (!dataEvo.chain.evolves_to[0] === "") {
     }
-
     if (dataEvo.chain.species.name === data.name) {
       const res1 = await fetch(url + dataEvo.chain.evolves_to[0].species.name);
       const d1 = await res1.json();
       if (d1.id <= 151) {
-        evolution = "Evoluciona a:&nbsp;&nbsp;&nbsp;" + dataEvo.chain.evolves_to[0].species.name;
+        evolution =
+          "Evoluciona a:&nbsp;&nbsp;&nbsp;" +
+          dataEvo.chain.evolves_to[0].species.name;
       } else {
         evolution = "";
       }
     }
     if (dataEvo.chain.evolves_to[0].species.name === data.name) {
-      const res2 = await fetch(url + dataEvo.chain.evolves_to[0].evolves_to[0].species.name);
-      const d2 = await res2.json();
-      if (d2.id <= 151) {
-        evolution =
-          "Evoluciona a:&nbsp;&nbsp;&nbsp;" +
-          dataEvo.chain.evolves_to[0].evolves_to[0].species.name;  
-      } else {
-        evolution = "";
+      if (dataEvo.chain.evolves_to[0].evolves_to[0]) {
+        const res2 = await fetch(
+          url + dataEvo.chain.evolves_to[0].evolves_to[0].species.name
+        );
+        const d2 = await res2.json();
+        if (d2.id <= 151) {
+          evolution =
+            "Evoluciona a:&nbsp;&nbsp;&nbsp;" +
+            dataEvo.chain.evolves_to[0].evolves_to[0].species.name;
+        } else {
+          evolution = "";
+        }
       }
     }
 
@@ -168,7 +167,7 @@ function createDiv(data) {
 
   if (data.id >= 29 && data.id <= 31) {
     document.getElementById("btnF").checked = true;
-    imgFemale();
+    imgFemale(data.id);
     document.getElementById("genM").classList.add("ocultar");
     document.getElementById("genS").classList.add("ocultar");
   }
@@ -182,7 +181,7 @@ function createDiv(data) {
   document.getElementById("btnSF").addEventListener("change", imgFemale);
 }
 
-function imgFemale() {
+function imgFemale(id) {
   const btnM = document.getElementById("btnM");
   const btnF = document.getElementById("btnF");
   const btnS = document.getElementById("btnS");
@@ -195,6 +194,14 @@ function imgFemale() {
   const imgMSB = document.getElementById("shinyBack");
   const imgFSF = document.getElementById("femaleSFront");
   const imgFSB = document.getElementById("femaleSBack");
+
+  if (id >= 29 && id<=31 && btnF.checked === false) {
+    imgFF.classList.remove("ocultar");
+    imgFB.classList.remove("ocultar");
+    btnF.checked = true;
+    imgFSF.classList.add("ocultar");
+    imgFSB.classList.add("ocultar");
+  }
   if (
     btnM.checked === false &&
     btnF.checked === false &&
