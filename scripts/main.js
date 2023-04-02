@@ -95,14 +95,6 @@ function createDiv(data, newDiv, tipos, numP) {
   } else if (data.name === "nidoran-m") {
     data.name = "nidoran ♂️";
   }
-
-  /* newDiv.innerHTML = `
-  <a href="/pokemonInfo.html" class="infoP" onclick="sendName('${data.name}')"></a>
-  <h2># ${numP}</h2>
-  <img src="${data.sprites.front_default}">
-  <p>${tipos}</p>
-  <h3>${data.name.toUpperCase()}</h3>
-  `; */
   newDiv.innerHTML = `
   <a href="/pokemonInfo.html" class="infoP" onclick="sendName('${
     data.name

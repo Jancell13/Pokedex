@@ -11,6 +11,8 @@
   border: .1em solid black;
   border-radius: 1em;
   margin: .3em;
+  box-shadow: .3em .3em .8em black;
+
 }
 
 span {
