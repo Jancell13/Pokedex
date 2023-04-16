@@ -366,7 +366,7 @@ function createDiv(data) {
     </div>
   </div>
     <div class="btnContainer">
-      <button class="volver" onclick="{location.href='/'; localStorage.clear();}"><img src="/assets/Unown-X.webp" height="48" width="48"/></button>
+      <button class="volver" onclick="{location.href='/'; localStorage.clear();}"><img src="assets/Unown-X.webp" height="48" width="48"/></button>
     </div>
   `;
 
