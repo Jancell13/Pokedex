@@ -90,7 +90,7 @@ function createDiv(data, newDiv, tipos, numP) {
     data.name = "nidoran ♂️";
   }
   newDiv.innerHTML = `
-  <a href="/pokemonInfo.html" class="infoP" onclick="sendName('${
+  <a href="pokemonInfo.html" class="infoP" onclick="sendName('${
     data.name
   }')"></a>
   <h2># ${numP}</h2>
