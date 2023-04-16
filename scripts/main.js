@@ -11,9 +11,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
 document.querySelectorAll("button").forEach((button) => {
   button.addEventListener("click", () => {
-    const a = button.textContent;
-    console.log(a);
-
     document.querySelectorAll(".cardPoke").forEach((poke) => {
       if (button.textContent.toLowerCase() === "ver todos") {
         poke.classList.remove("ocultar");
@@ -66,15 +63,12 @@ async function connectionAPI(pokemon) {
       tipos = `<span ${cssSpan1} id="${tipo1}">${tipo1}</span>`;
       newDiv.style.background = `${cssTypes[tipo1]}`;
     }
-    //typesCss(data)
 
     if (data.id < 10) {
       numP = "00" + data.id;
     } else if (data.id < 100) {
       numP = "0" + data.id;
-    } /* else if (data.id < 1000) {
-      numP = "0" + data.id;
-    } */ else {
+    } else {
       numP = data.id;
     }
     if (data.id > 151) {
@@ -104,7 +98,6 @@ function createDiv(data, newDiv, tipos, numP) {
   <p>${tipos}</p>
   <h3>${data.name.toUpperCase()}</h3>
   `;
-
   pokedexContainer.appendChild(newDiv);
 }
 
@@ -114,7 +107,6 @@ function sendName(data) {
   } else if (data === "nidoran ♂️") {
     data = "nidoran-m";
   }
-  console.log(data);
   localStorage.setItem(1, data);
 }
 
@@ -126,7 +118,6 @@ async function showPokemon() {
   try {
     for (let i = 1; i <= 151; i++) {
       await connectionAPI(i);
-      //document.getElementById("cleanSearch").disabled = true;
     }
     document.querySelectorAll("button").forEach((btnTipos) => {
       btnTipos.disabled = false;
@@ -135,15 +126,12 @@ async function showPokemon() {
     document.querySelectorAll(".ocultar").forEach((poke) => {
       poke.classList.remove("ocultar");
     });
-
-    //document.getElementById("cleanSearch").disabled = false;
   } catch (error) {
     console.error("Ocurrio un error, " + error);
   }
 }
 
 document.addEventListener("keyup", (e) => {
-  console.log(e.target.value);
   if (e.target.matches("#search")) {
     document.querySelectorAll(".cardPoke").forEach((poke) => {
       poke.textContent.toLowerCase().includes(e.target.value.toLowerCase())

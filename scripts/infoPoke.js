@@ -1,12 +1,16 @@
 import { tiposEs, cssTypes } from "./tipos.js";
 import { idEvo } from "./evoFamily.js";
+import { obj } from "./Obj.js";
 const url = "https://pokeapi.co/api/v2/pokemon/";
 const evoP = "https://pokeapi.co/api/v2/evolution-chain/";
 var numP = "",
   tipos = "",
   color = "",
   preEvolucion = "",
-  evolucion = "";
+  evolucion = "",
+  evoEevee = "",
+  evoEevee2 = "",
+  evoEevee3 = "";
 const selectPoke = localStorage.getItem(1);
 const pokemonInfo = document.getElementById("pokemonInfo");
 const uCF = selectPoke.charAt(0).toUpperCase() + selectPoke.slice(1);
@@ -22,7 +26,6 @@ function sendName(data) {
   } else if (data === "nidoran ♂️") {
     data = "nidoran-m";
   }
-  console.log(data);
   localStorage.setItem(1, data);
 }
 function numPokemon(id) {
@@ -36,14 +39,25 @@ function numPokemon(id) {
 }
 
 function bgPokemon(data) {
-  console.log(data);
   const tipo1 = tiposEs[data.types[0].type.name];
   //uno o dos tipos elementales
   if (data.types[0] && data.types[1]) {
     const tipo2 = tiposEs[data.types[1].type.name];
-    color = `linear-gradient(to bottom, ${cssTypes[tipo1]} 5%, ${cssTypes[tipo2]})`;
+    return (color = `linear-gradient(to bottom, ${cssTypes[tipo1]} 5%, ${cssTypes[tipo2]})`);
   } else {
-    color = `${cssTypes[tipo1]}`;
+    return (color = `${cssTypes[tipo1]}`);
+  }
+}
+
+function metodoEvo(dataEvo) {
+  if (dataEvo.evolution_details[0].min_level != null) {
+    return `nivel ${dataEvo.evolution_details[0].min_level}`;
+  }
+  if (dataEvo.evolution_details[0].item != null) {
+    return `${obj[dataEvo.evolution_details[0].item.name]}`;
+  }
+  if (dataEvo.evolution_details[0].trigger.name === "trade") {
+    return "Intercambio";
   }
 }
 
@@ -62,32 +76,34 @@ async function connectionAPI(pokemon) {
     const evo = await fetch(evoP + idEvo[data.id]);
     const dataEvo = await evo.json();
     if (dataEvo.chain.evolves_to[0] && dataEvo.id != 67) {
-      console.log("ASAAS")
       if (dataEvo.chain.species.name === data.name) {
-        const evo1 = await fetch(url + dataEvo.chain.evolves_to[0].species.name);
+        const evo1 = await fetch(
+          url + dataEvo.chain.evolves_to[0].species.name
+        );
         const dataEvo1 = await evo1.json();
         if (dataEvo1.id <= 151) {
           numPokemon(dataEvo1.id);
           bgPokemon(dataEvo1);
+
           evolucion = `
-            <div class="cardPoke" style="background:${color}">
-            <a href="/pokemonInfo.html" class="infoP" onclick="sendName('${
-              dataEvo1.name
-            }')"></a>
-            <h2>Evoluciona en:</h2>
-            <img src="${dataEvo1.sprites.front_default}">
-            <h3>${dataEvo1.name.toUpperCase()}</h3>
-            
-            </div>
-            `;
+              <div class="cardPoke" style="background:${color}">
+                <a href="/pokemonInfo.html" class="infoP" onclick="sendName('${
+                  dataEvo1.name
+                }')"></a>
+                <h2>Evoluciona en:</h2>
+                <img src="${dataEvo1.sprites.front_default}">
+                <h3>${dataEvo1.name.toUpperCase()}</h3>
+                <p>metodo: ${metodoEvo(dataEvo.chain.evolves_to[0])}</p>
+              </div>
+              `;
         } else {
           evolucion = "";
         }
       }
       if (dataEvo.chain.evolves_to[0].species.name === data.name) {
+        const preEvo = await fetch(url + dataEvo.chain.species.name);
+        const dataPreEvo = await preEvo.json();
         if (dataEvo.chain.evolves_to[0].evolves_to[0]) {
-          const preEvo = await fetch(url + dataEvo.chain.species.name);
-          const dataPreEvo = await preEvo.json();
           const evo2 = await fetch(
             url + dataEvo.chain.evolves_to[0].evolves_to[0].species.name
           );
@@ -102,9 +118,10 @@ async function connectionAPI(pokemon) {
               <h2>Evolucion de:</h2>
               <img src="${dataPreEvo.sprites.front_default}">
               <h3>${dataPreEvo.name.toUpperCase()}</h3>
+              <p>metodo: ${metodoEvo(dataEvo.chain.evolves_to[0])}</p>
             </div>`;
-          }else{
-            preEvolucion="";
+          } else {
+            preEvolucion = "";
           }
           if (dataEvo2.id <= 151) {
             numPokemon(dataEvo2.id);
@@ -117,22 +134,39 @@ async function connectionAPI(pokemon) {
                   <h2>Evoluciona en:</h2>
                   <img src="${dataEvo2.sprites.front_default}">
                   <h3>${dataEvo2.name.toUpperCase()}</h3>
+                  <p>metodo: ${metodoEvo(
+                    dataEvo.chain.evolves_to[0].evolves_to[0]
+                  )}</p>
                 </div>
               `;
           } else {
             evolucion = "";
           }
+        } else {
+          if (dataPreEvo.id <= 151) {
+            preEvolucion = `<div class="cardPoke" style="background:${color}">
+              <a href="/pokemonInfo.html" class="infoP" onclick="sendName('${
+                dataPreEvo.name
+              }')"></a>
+              <h2>Evolucion de:</h2>
+              <img src="${dataPreEvo.sprites.front_default}">
+              <h3>${dataPreEvo.name.toUpperCase()}</h3>
+              <p>metodo: ${metodoEvo(dataEvo.chain.evolves_to[0])}</p>
+            </div>`;
+          }
         }
       }
-      if (dataEvo.chain.evolves_to[0].evolves_to[0].species.name === data.name) {
-        if (dataEvo.chain.evolves_to[0].evolves_to[0]) {
+      if (dataEvo.chain.evolves_to[0].evolves_to[0]) {
+        if (
+          dataEvo.chain.evolves_to[0].evolves_to[0].species.name === data.name
+        ) {
           const preEvo = await fetch(
             url + dataEvo.chain.evolves_to[0].species.name
           );
           const dataPreEvo = await preEvo.json();
           numPokemon(dataPreEvo.id);
           bgPokemon(dataPreEvo);
-  
+
           preEvolucion = `<div class="cardPoke" style="background:${color}">
               <a href="/pokemonInfo.html" class="infoP" onclick="sendName('${
                 dataPreEvo.name
@@ -140,11 +174,93 @@ async function connectionAPI(pokemon) {
               <h2>Evolucion de:</h2>
               <img src="${dataPreEvo.sprites.front_default}">
               <h3>${dataPreEvo.name.toUpperCase()}</h3>
+              <p>metodo: ${metodoEvo(
+                dataEvo.chain.evolves_to[0].evolves_to[0]
+              )}</p>
             </div>`;
         }
       }
+    } else {
+      try {
+        if (dataEvo.id === 67) {
+          if (dataEvo.chain.species.name === data.name) {
+            const eevee1 = await fetch(
+              url + dataEvo.chain.evolves_to[0].species.name
+            );
+            const dataEevee1 = await eevee1.json();
+            const eevee2 = await fetch(
+              url + dataEvo.chain.evolves_to[1].species.name
+            );
+            const dataEevee2 = await eevee2.json();
+            const eevee3 = await fetch(
+              url + dataEvo.chain.evolves_to[2].species.name
+            );
+            const dataEevee3 = await eevee3.json();
+
+            evoEevee = `
+              <div class="cardPoke" style="background:${bgPokemon(dataEevee1)}">
+                <a href="/pokemonInfo.html" class="infoP" onclick="sendName('${
+                  dataEevee1.name
+                }')"></a>
+                <h3>Evoluciona en:</h3>
+                <img src="${dataEevee1.sprites.front_default}">
+                <h3>${dataEevee1.name.toUpperCase()}</h3>
+                <p>metodo: ${metodoEvo(dataEvo.chain.evolves_to[0])}</p>
+              </div>
+              `;
+            evoEevee2 = `<div class="cardPoke" style="background:${bgPokemon(
+              dataEevee2
+            )}">
+                <a href="/pokemonInfo.html" class="infoP" onclick="sendName('${
+                  dataEevee2.name
+                }')"></a>
+                <h3>Evoluciona en:</h3>
+                <img src="${dataEevee2.sprites.front_default}">
+                <h3>${dataEevee2.name.toUpperCase()}</h3>
+                <p>metodo: ${metodoEvo(dataEvo.chain.evolves_to[1])}</p>
+              </div>`;
+            evoEevee3 = `
+              <div class="cardPoke" style="background:${bgPokemon(dataEevee3)}">
+                <a href="/pokemonInfo.html" class="infoP" onclick="sendName('${
+                  dataEevee3.name
+                }')"></a>
+                <h3>Evoluciona en:</h3>
+                <img src="${dataEevee3.sprites.front_default}">
+                <h3>${dataEevee3.name.toUpperCase()}</h3>
+                <p>metodo: ${metodoEvo(dataEvo.chain.evolves_to[2])}</p>
+              </div>
+              `;
+          }
+        }
+        if (
+          dataEvo.chain.evolves_to[0].species.name === data.name ||
+          dataEvo.chain.evolves_to[1].species.name === data.name ||
+          dataEvo.chain.evolves_to[2].species.name === data.name
+        ) {
+          const preEvo = await fetch(url + dataEvo.chain.species.name);
+          const dataPreEvo = await preEvo.json();
+          if (dataPreEvo.id <= 151) {
+            numPokemon(dataPreEvo.id);
+            bgPokemon(dataPreEvo);
+            preEvolucion = `<div class="cardPoke" style="background:${color}">
+                  <a href="/pokemonInfo.html" class="infoP" onclick="sendName('${
+                    dataPreEvo.name
+                  }')"></a>
+                  <h2>Evolucion de:</h2>
+                  <img src="${dataPreEvo.sprites.front_default}">
+                  <h3>${dataPreEvo.name.toUpperCase()}</h3>
+                  <p>metodo: ${metodoEvo(dataEvo.chain.evolves_to[0])}</p>
+                </div>`;
+          } else {
+            preEvolucion = "";
+          }
+        }
+      } catch (error) {
+        console.error(error);
+        loaderPokeball.classList.add("ocultar");
+        showError("Ha ocurrido un error al mostrar los datos del pokemon");
+      }
     }
-    
 
     if (data.sprites.front_female === null) {
       data.sprites.front_female = data.sprites.front_default;
@@ -244,11 +360,14 @@ function createDiv(data) {
     <div id="pokedexContainer">
     ${preEvolucion}
     ${evolucion}
+    ${evoEevee}
+    ${evoEevee2}
+    ${evoEevee3}
     </div>
   </div>
-  <div class="btnContainer">
-    <button class="volver" onclick="{location.href='/'; localStorage.clear();}">Volver</button>
-  </div>
+    <div class="btnContainer">
+      <button class="volver" onclick="{location.href='/'; localStorage.clear();}"><img src="/assets/Unown-X.webp" height="48" width="48"/></button>
+    </div>
   `;
 
   if (data.id >= 29 && data.id <= 31) {

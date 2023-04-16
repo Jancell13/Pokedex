@@ -72,10 +72,10 @@
   box-shadow: 0 0 0 0.3em #000;
   animation: buttonglow 1s ease-in-out infinite;
 }
-.back{
+.back {
   text-decoration: none;
   color: #fff;
   background: #7f8c8d;
   border-radius: 1em;
-  padding: .5em;
+  padding: 0.5em;
 }

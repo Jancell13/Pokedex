@@ -8,19 +8,18 @@
 #pokedexContainer > .cardPoke {
   position: relative;
   width: 18em;
-  border: .1em solid black;
+  border: 0.1em solid black;
   border-radius: 1em;
-  margin: .3em;
-  box-shadow: .3em .3em .8em black;
-
+  margin: 0.3em;
+  box-shadow: 0.3em 0.3em 0.8em black;
 }
 
 span {
   padding: 0 0.2em 0.5em 0.5em;
   border-radius: 0.5em;
-  text-shadow: .1em .1em black;
-  border: .1em solid black;
+  text-shadow: 0.1em 0.1em black;
+  border: 0.1em solid black;
 }
-p{
-  font-size: .8em;
+p {
+  font-size: 0.8em;
 }
