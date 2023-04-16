@@ -87,7 +87,7 @@ async function connectionAPI(pokemon) {
 
           evolucion = `
               <div class="cardPoke" style="background:${color}">
-                <a href="/pokemonInfo.html" class="infoP" onclick="sendName('${
+                <a href="pokemonInfo.html" class="infoP" onclick="sendName('${
                   dataEvo1.name
                 }')"></a>
                 <h2>Evoluciona en:</h2>
@@ -112,7 +112,7 @@ async function connectionAPI(pokemon) {
             numPokemon(dataPreEvo.id);
             bgPokemon(dataPreEvo);
             preEvolucion = `<div class="cardPoke" style="background:${color}">
-              <a href="/pokemonInfo.html" class="infoP" onclick="sendName('${
+              <a href="pokemonInfo.html" class="infoP" onclick="sendName('${
                 dataPreEvo.name
               }')"></a>
               <h2>Evolucion de:</h2>
@@ -128,7 +128,7 @@ async function connectionAPI(pokemon) {
             bgPokemon(dataEvo2);
             evolucion = `
                 <div class="cardPoke" style="background:${color}">
-                  <a href="/pokemonInfo.html" class="infoP" onclick="sendName('${
+                  <a href="pokemonInfo.html" class="infoP" onclick="sendName('${
                     dataEvo2.name
                   }')"></a>
                   <h2>Evoluciona en:</h2>
@@ -145,7 +145,7 @@ async function connectionAPI(pokemon) {
         } else {
           if (dataPreEvo.id <= 151) {
             preEvolucion = `<div class="cardPoke" style="background:${color}">
-              <a href="/pokemonInfo.html" class="infoP" onclick="sendName('${
+              <a href="pokemonInfo.html" class="infoP" onclick="sendName('${
                 dataPreEvo.name
               }')"></a>
               <h2>Evolucion de:</h2>
@@ -168,7 +168,7 @@ async function connectionAPI(pokemon) {
           bgPokemon(dataPreEvo);
 
           preEvolucion = `<div class="cardPoke" style="background:${color}">
-              <a href="/pokemonInfo.html" class="infoP" onclick="sendName('${
+              <a href="pokemonInfo.html" class="infoP" onclick="sendName('${
                 dataPreEvo.name
               }')"></a>
               <h2>Evolucion de:</h2>
@@ -199,7 +199,7 @@ async function connectionAPI(pokemon) {
 
             evoEevee = `
               <div class="cardPoke" style="background:${bgPokemon(dataEevee1)}">
-                <a href="/pokemonInfo.html" class="infoP" onclick="sendName('${
+                <a href="pokemonInfo.html" class="infoP" onclick="sendName('${
                   dataEevee1.name
                 }')"></a>
                 <h3>Evoluciona en:</h3>
@@ -211,7 +211,7 @@ async function connectionAPI(pokemon) {
             evoEevee2 = `<div class="cardPoke" style="background:${bgPokemon(
               dataEevee2
             )}">
-                <a href="/pokemonInfo.html" class="infoP" onclick="sendName('${
+                <a href="pokemonInfo.html" class="infoP" onclick="sendName('${
                   dataEevee2.name
                 }')"></a>
                 <h3>Evoluciona en:</h3>
@@ -221,7 +221,7 @@ async function connectionAPI(pokemon) {
               </div>`;
             evoEevee3 = `
               <div class="cardPoke" style="background:${bgPokemon(dataEevee3)}">
-                <a href="/pokemonInfo.html" class="infoP" onclick="sendName('${
+                <a href="pokemonInfo.html" class="infoP" onclick="sendName('${
                   dataEevee3.name
                 }')"></a>
                 <h3>Evoluciona en:</h3>
@@ -243,7 +243,7 @@ async function connectionAPI(pokemon) {
             numPokemon(dataPreEvo.id);
             bgPokemon(dataPreEvo);
             preEvolucion = `<div class="cardPoke" style="background:${color}">
-                  <a href="/pokemonInfo.html" class="infoP" onclick="sendName('${
+                  <a href="pokemonInfo.html" class="infoP" onclick="sendName('${
                     dataPreEvo.name
                   }')"></a>
                   <h2>Evolucion de:</h2>
