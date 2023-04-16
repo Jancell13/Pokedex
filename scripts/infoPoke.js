@@ -87,7 +87,7 @@ async function connectionAPI(pokemon) {
 
           evolucion = `
               <div class="cardPoke" style="background:${color}">
-                <a href="pokedex/pokemonInfo.html" class="infoP" onclick="sendName('${
+                <a href="Pokedex/pokemonInfo.html" class="infoP" onclick="sendName('${
                   dataEvo1.name
                 }')"></a>
                 <h2>Evoluciona en:</h2>
