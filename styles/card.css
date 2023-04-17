@@ -7,7 +7,7 @@
 
 #pokedexContainer > .cardPoke {
   position: relative;
-  width: 18em;
+  width: 15em;
   border: 0.1em solid black;
   border-radius: 1em;
   margin: 0.3em;
