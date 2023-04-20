@@ -7,8 +7,6 @@ window.sendName = sendName;
 
 document.addEventListener("DOMContentLoaded", () => {
   showPokemon();
-  console.log(screen.width)
-  console.log(screen.height)
 });
 
 document.querySelectorAll("button").forEach((button) => {
@@ -118,7 +116,7 @@ async function showPokemon() {
   document.querySelectorAll("button").forEach((btnTipos) => {
     btnTipos.disabled = true;
   });
-  search.disabled = true
+  search.disabled = true;
   try {
     for (let i = 1; i <= 151; i++) {
       await connectionAPI(i);
@@ -130,7 +128,7 @@ async function showPokemon() {
     document.querySelectorAll(".ocultar").forEach((poke) => {
       poke.classList.remove("ocultar");
     });
-    loaderPokeball.classList.add("ocultar")
+    loaderPokeball.classList.add("ocultar");
   } catch (error) {
     console.error("Ocurrio un error, " + error);
   }
