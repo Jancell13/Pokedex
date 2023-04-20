@@ -1,19 +1,19 @@
 @font-face {
   font-family: Pokemon classic;
-  src: url("./assets/font/Pokemon.ttf");
+  src: url("/assets/font/Pokemon.ttf");
 }
 *,
 html {
   margin: 0;
   padding: 0;
+  
 }
 button {
   background: transparent;
   border: none;
-  font-family: "Pokemon classic";
 }
 
-@media only screen and (max-width: 900px) {
+@media only screen and (max-width: 415px) {
   div > .tipos {
     display: none;
   }
@@ -24,7 +24,7 @@ button {
     padding: 20px;
   }
 }
-@media only screen and (max-height: 450px) {
+/* @media only screen and (max-height: 300px) {
   h1 {
     display: none;
   }
@@ -34,7 +34,7 @@ button {
   .searchMenu {
     padding: 20px;
   }
-}
+} */
 
 :root {
   --acero: #b8b8d0;
@@ -62,7 +62,6 @@ body {
   text-shadow: 2px 2px black;
   background-color: #252424;
   opacity: 1;
-  font-family: "Pokemon classic";
   background: radial-gradient(
       circle,
       transparent 20%,
@@ -107,6 +106,9 @@ p {
   margin-block-end: 1em;
   margin-inline-start: 0px;
   margin-inline-end: 0px;
+}
+.errorMsg{
+  font-size: 1.5em;
 }
 
 button {

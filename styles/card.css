@@ -20,6 +20,6 @@ span {
   text-shadow: 0.1em 0.1em black;
   border: 0.1em solid black;
 }
-p {
+.infoPTag {
   font-size: 0.8em;
 }

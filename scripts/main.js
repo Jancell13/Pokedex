@@ -7,6 +7,8 @@ window.sendName = sendName;
 
 document.addEventListener("DOMContentLoaded", () => {
   showPokemon();
+  console.log(screen.width)
+  console.log(screen.height)
 });
 
 document.querySelectorAll("button").forEach((button) => {
@@ -27,7 +29,7 @@ document.querySelectorAll("button").forEach((button) => {
 });
 
 function showError(msg) {
-  pokedexContainer.innerHTML = `<p>${msg}</p>`;
+  pokedexContainer.innerHTML = `<p id="errorMsg">${msg}</p>`;
 }
 
 const loaderPokeball = document.querySelector(".container");
@@ -95,7 +97,7 @@ function createDiv(data, newDiv, tipos, numP) {
   }')"></a>
   <h2># ${numP}</h2>
   <img src="${data.sprites.front_default}">
-  <p>${tipos}</p>
+  <p class="infoPTag">${tipos}</p>
   <h3>${data.name.toUpperCase()}</h3>
   `;
   pokedexContainer.appendChild(newDiv);
@@ -122,10 +124,10 @@ async function showPokemon() {
     document.querySelectorAll("button").forEach((btnTipos) => {
       btnTipos.disabled = false;
     });
-    loaderPokeball.innerHTML = "";
     document.querySelectorAll(".ocultar").forEach((poke) => {
       poke.classList.remove("ocultar");
     });
+    loaderPokeball.classList.add("ocultar")
   } catch (error) {
     console.error("Ocurrio un error, " + error);
   }

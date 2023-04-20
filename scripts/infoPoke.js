@@ -10,16 +10,24 @@ var numP = "",
   evolucion = "",
   evoEevee = "",
   evoEevee2 = "",
-  evoEevee3 = "";
-const selectPoke = localStorage.getItem(1);
+  evoEevee3 = "",
+  selectPoke;
+  if (localStorage.getItem(1) != undefined) {
+    selectPoke = localStorage.getItem(1);
+    const uCF = selectPoke.charAt(0).toUpperCase() + selectPoke.slice(1);
+    document.title = uCF;
+  } 
+
 const pokemonInfo = document.getElementById("pokemonInfo");
-const uCF = selectPoke.charAt(0).toUpperCase() + selectPoke.slice(1);
 window.sendName = sendName;
-document.title = uCF;
-0;
 document.addEventListener("DOMContentLoaded", () => {
   connectionAPI(selectPoke);
 });
+
+function showError(msg) {
+  pokemonInfo.innerHTML = `<p id="errorMsg">${msg}</p>`;
+}
+
 function sendName(data) {
   if (data === "nidoran ♀️") {
     data = "nidoran-f";
@@ -67,6 +75,7 @@ async function connectionAPI(pokemon) {
   } else if (pokemon === "nidoran ♂️") {
     pokemon = "nidoran-m";
   }
+  const errorInfoP = document.querySelector("#pokemonInfo")
   const loaderPokeball = document.querySelector(".container");
   try {
     const response = await fetch(url + pokemon);
@@ -93,7 +102,9 @@ async function connectionAPI(pokemon) {
                 <h2>Evoluciona en:</h2>
                 <img src="${dataEvo1.sprites.front_default}">
                 <h3>${dataEvo1.name.toUpperCase()}</h3>
-                <p>metodo: ${metodoEvo(dataEvo.chain.evolves_to[0])}</p>
+                <p>metodo: ${metodoEvo(
+                  dataEvo.chain.evolves_to[0]
+                )}</p>
               </div>
               `;
         } else {
@@ -118,7 +129,9 @@ async function connectionAPI(pokemon) {
               <h2>Evolucion de:</h2>
               <img src="${dataPreEvo.sprites.front_default}">
               <h3>${dataPreEvo.name.toUpperCase()}</h3>
-              <p>metodo: ${metodoEvo(dataEvo.chain.evolves_to[0])}</p>
+              <p>metodo: ${metodoEvo(
+                dataEvo.chain.evolves_to[0]
+              )}</p>
             </div>`;
           } else {
             preEvolucion = "";
@@ -151,7 +164,9 @@ async function connectionAPI(pokemon) {
               <h2>Evolucion de:</h2>
               <img src="${dataPreEvo.sprites.front_default}">
               <h3>${dataPreEvo.name.toUpperCase()}</h3>
-              <p>metodo: ${metodoEvo(dataEvo.chain.evolves_to[0])}</p>
+              <p>metodo: ${metodoEvo(
+                dataEvo.chain.evolves_to[0]
+              )}</p>
             </div>`;
           }
         }
@@ -205,7 +220,9 @@ async function connectionAPI(pokemon) {
                 <h3>Evoluciona en:</h3>
                 <img src="${dataEevee1.sprites.front_default}">
                 <h3>${dataEevee1.name.toUpperCase()}</h3>
-                <p>metodo: ${metodoEvo(dataEvo.chain.evolves_to[0])}</p>
+                <p>metodo: ${metodoEvo(
+                  dataEvo.chain.evolves_to[0]
+                )}</p>
               </div>
               `;
             evoEevee2 = `<div class="cardPoke" style="background:${bgPokemon(
@@ -217,7 +234,9 @@ async function connectionAPI(pokemon) {
                 <h3>Evoluciona en:</h3>
                 <img src="${dataEevee2.sprites.front_default}">
                 <h3>${dataEevee2.name.toUpperCase()}</h3>
-                <p>metodo: ${metodoEvo(dataEvo.chain.evolves_to[1])}</p>
+                <p>metodo: ${metodoEvo(
+                  dataEvo.chain.evolves_to[1]
+                )}</p>
               </div>`;
             evoEevee3 = `
               <div class="cardPoke" style="background:${bgPokemon(dataEevee3)}">
@@ -227,7 +246,9 @@ async function connectionAPI(pokemon) {
                 <h3>Evoluciona en:</h3>
                 <img src="${dataEevee3.sprites.front_default}">
                 <h3>${dataEevee3.name.toUpperCase()}</h3>
-                <p>metodo: ${metodoEvo(dataEvo.chain.evolves_to[2])}</p>
+                <p>metodo: ${metodoEvo(
+                  dataEvo.chain.evolves_to[2]
+                )}</p>
               </div>
               `;
           }
@@ -249,7 +270,9 @@ async function connectionAPI(pokemon) {
                   <h2>Evolucion de:</h2>
                   <img src="${dataPreEvo.sprites.front_default}">
                   <h3>${dataPreEvo.name.toUpperCase()}</h3>
-                  <p>metodo: ${metodoEvo(dataEvo.chain.evolves_to[0])}</p>
+                  <p>metodo: ${metodoEvo(
+                    dataEvo.chain.evolves_to[0]
+                  )}</p>
                 </div>`;
           } else {
             preEvolucion = "";
@@ -259,6 +282,7 @@ async function connectionAPI(pokemon) {
         console.error(error);
         loaderPokeball.classList.add("ocultar");
         showError("Ha ocurrido un error al mostrar los datos del pokemon");
+        errorInfoP.classList.add("errorInfoP", "errorMsg");
       }
     }
 
@@ -281,6 +305,7 @@ async function connectionAPI(pokemon) {
     console.error(error);
     loaderPokeball.classList.add("ocultar");
     showError("Ha ocurrido un error al mostrar los datos del pokemon");
+    errorInfoP.classList.add("errorInfoP", "errorMsg");
   }
 }
 function title(data) {
@@ -293,9 +318,7 @@ function title(data) {
   link.href = data.sprites.versions["generation-vii"].icons.front_default;
 }
 
-function showError(msg) {
-  pokemonInfo.innerHTML = `<p>${msg}</p>`;
-}
+
 
 function createDiv(data) {
   const tipo1 = tiposEs[data.types[0].type.name];
