@@ -114,9 +114,11 @@ function sendName(data) {
 
 async function showPokemon() {
   const loaderPokeball = document.querySelector(".container");
+  const search = document.getElementById("search");
   document.querySelectorAll("button").forEach((btnTipos) => {
     btnTipos.disabled = true;
   });
+  search.disabled = true
   try {
     for (let i = 1; i <= 151; i++) {
       await connectionAPI(i);
@@ -124,6 +126,7 @@ async function showPokemon() {
     document.querySelectorAll("button").forEach((btnTipos) => {
       btnTipos.disabled = false;
     });
+    search.disabled = false;
     document.querySelectorAll(".ocultar").forEach((poke) => {
       poke.classList.remove("ocultar");
     });
